@@ -1,0 +1,34 @@
+#!/bin/bash
+#move newly downloaded vim color schemes to .vim/colors/
+dwnldDir=~/dwnld/
+colorDir=~/.vim/colors/
+iCP=0
+
+for iDir in $(find $dwnldDir -type d -iname colors)
+do
+	iFile=$iDir/*.vim
+	iName=$(basename $iFile)
+
+	#CHECK IF FILE DOES NOT EXIST
+	if [ ! -f $colorDir$iName ]
+	then
+
+		printf "Copying file: "$iName"\n"
+		$(cp $iFile $colorDir)
+
+		#CHECK COPY SUCCESS
+		if [ $? -ne 0 ]
+		then
+			echo "error copying"
+		else
+			((iCP++))
+		fi
+	fi
+done
+
+if [ $iCP -gt 0 ]
+then	
+	printf "\nSuccessfully copied $iCP files\n"
+else
+	printf "\nColor files up to date!\n"
+fi

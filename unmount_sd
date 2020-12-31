@@ -1,0 +1,22 @@
+#!/bin/bash
+#quickly unmount external SD Card
+
+#list devices with lsblk (use -l arg to remove dir tree character)
+#lsblk -- list devices
+
+# Determine dev ID for SD Card (should be sdb1)
+devDir=/dev/
+devName=$(lsblk -l | grep mnt/sd | awk -F" " '{print $1 }')
+devFullname=$devDir$devName
+drvFullname=${devFullname::-1}
+
+if [ ${#devName} -gt 0 ];
+then
+	udisksctl unmount -bf $devFullname
+else
+	echo "SD Card not found."
+fi
+
+# manually power off
+# udisksctl power-off -b /dev/***
+

@@ -1,0 +1,35 @@
+#!/bin/bash
+#quickly mount external USB drive 
+#specifically 'Samsung Portable SSD' for system/photos backup
+
+#list devices with lsblk (use -l arg to remove dir tree character)
+#lsblk -- list devices
+
+# Determine dev ID for Samsung USB drive (should be sdc1)
+
+devblk=$(fdisk -l | grep HPFS/NTFS/exFAT | awk -F" " '{print $1 }')
+
+if [ ${#devblk} -gt 0 ];
+then
+	mount $devblk /mnt/samsung
+else
+	echo "Samsung SSD not found."
+fi
+
+#abcde
+
+#devDir=/dev/
+#devName=$(lsblk -l | grep samsung | awk -F" " '{print $1 }')
+#devFullname=$devDir$devName
+#drvFullname=${devFullname::-1}
+
+#if [ ${#devName} -gt 0 ];
+#then
+#	udisksctl unmount -bf $devFullname
+	#umount $devFullname
+#	sudo udisksctl power-off -b $drvFullname
+#else
+#	echo "USB drive not found."
+#fi
+
+

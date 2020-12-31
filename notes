@@ -1,0 +1,5 @@
+find . -newermt "YYYYMMDD HH:MM:SS" -exec cp "dir" \;
+
+RUNE AUDO SSH:
+> ssh -l root 10.0.1.11
+> password: rune

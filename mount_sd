@@ -1,0 +1,16 @@
+#!/bin/bash
+#quickly mount external SD Card
+
+#list devices with lsblk (use -l arg to remove dir tree character)
+#lsblk -- list devices
+
+# Determine dev ID for SD Card (should be sdb1)
+
+devblk=$(fdisk -l | grep FAT32 | awk -F" " '{print $1 }')
+
+if [ ${#devblk} -gt 0 ];
+then
+	mount $devblk /mnt/sd
+else
+	echo "SD Card not found."
+fi
